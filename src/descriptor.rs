@@ -1,25 +1,38 @@
 use std::marker::PhantomData;
 
-pub struct Descriptor<'a, S, D> {
-	source: S,
-	description: [D; 2],
-	_phantom: PhantomData<&'a ()>,
+pub trait  Descriptor<S,D:ToString>{
+	fn source(&self)->&S;
+	fn description(&self)->&[D;2];
 }
 
-impl<'a, S, D: ToString> Descriptor<'a, S, D> {
+pub struct CommonDescriptor<S, D> {
+	source: S,
+	description: [D; 2],
+}
+
+impl<S, D: ToString> CommonDescriptor<S, D> {
 	pub fn new(source: S, description: [D; 2]) -> Self {
-		Descriptor {
+		CommonDescriptor {
 			source,
 			description,
-			_phantom: PhantomData,
 		}
 	}
-	
+
 	pub fn source(&self) -> &S {
 		&self.source
 	}
-	
+
 	pub fn description(&self) -> &[D; 2] {
+		&self.description
+	}
+}
+
+impl<S,D:ToString> Descriptor<S,D> for CommonDescriptor<S,D> {
+	fn source(&self) -> &S {
+		&self.source
+	}
+	
+	fn description(&self) -> &[D; 2] {
 		&self.description
 	}
 }
