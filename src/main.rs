@@ -3,9 +3,10 @@
 mod describable;
 mod sample;
 mod descriptor;
-mod lifetime_survey;
-mod Putter;
+mod putter;
 mod envelope;
+mod common_descriptor;
+mod common_describable;
 
 fn main() {
 }
